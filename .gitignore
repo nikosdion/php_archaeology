@@ -1,0 +1,10 @@
+# Your MySQL data
+/mysql/data/**
+!/mysql/.gitkeep
+
+# Your website data
+/public_html/**
+!/public_html/.gitkeep
+
+# Your .env file
+.env

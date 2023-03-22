@@ -1,0 +1,64 @@
+version: "3.5"
+services:
+  mailhog:
+    image: mailhog/mailhog:latest
+    networks:
+      - internal
+      - visible
+    container_name: ${DOCKER_IMAGE_PREFIX}mailhog
+    restart: always
+    ports:
+      - "${EXTERNAL_MAILHOG_PORT}:8025"
+  php:
+    build:
+      context: './php/'
+      args:
+        PHP_VERSION: ${PHP_VERSION}
+    networks:
+      - internal
+    volumes:
+      - ${SITE_ROOT}:/var/www/html/
+    container_name: ${DOCKER_IMAGE_PREFIX}php
+    restart: always
+  apache:
+    build:
+      context: './apache/'
+      args:
+        APACHE_VERSION: ${APACHE_VERSION}
+    depends_on:
+      - php
+    networks:
+      - visible
+      - internal
+    ports:
+      - "${EXTERNAL_HTTP_PORT}:80"
+      - "${EXTERNAL_HTTPS_PORT}:443"
+    volumes:
+      - ${SITE_ROOT}:/var/www/html/
+    container_name: ${DOCKER_IMAGE_PREFIX}apache
+    restart: always
+  mysql:
+    image: mysql:${MYSQL_VERSION}
+    command:
+      - mysqld
+    restart: always
+    ports:
+      - "${EXTERNAL_MYSQL_PORT}:3306"
+    volumes:
+      - ${MYSQL_ROOT}:/var/lib/mysql
+    networks:
+      - internal
+    environment:
+      TZ: "${TZ}"
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${DB_NAME}"
+      MYSQL_USER: "${DB_USERNAME}"
+      MYSQL_PASSWORD: "${DB_PASSWORD}"
+    container_name: ${DOCKER_IMAGE_PREFIX}mysql
+networks:
+  visible:
+    name: ${DOCKER_IMAGE_PREFIX}visible
+  internal:
+    name: ${DOCKER_IMAGE_PREFIX}internal
+volumes:
+  data:
