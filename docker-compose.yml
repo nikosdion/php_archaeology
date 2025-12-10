@@ -38,7 +38,7 @@ services:
     container_name: ${DOCKER_IMAGE_PREFIX}apache
     restart: always
   mysql:
-    image: mysql:${MYSQL_VERSION}
+    image: ${DB_SERVER_TYPE}:${MYSQL_VERSION}
     command:
       - mysqld
     restart: always
