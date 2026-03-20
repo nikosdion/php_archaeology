@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+# Make sure the .env file exists
+if [ ! -f .env ]
+then
+  echo Please copy .env.sample to .env before running this script.
+  exit 1
+fi
+
+# Make sure we have a public_html directory, the .gitkeep file is no longer present, and it has the right permissions
+[ ! -d public_html ] && mkdir public_html
+[ -f public_html/.gitkeep ] && rm public_html/.gitkeep
+chmod 0777 public_html -Rf
+chmod 0777 public_html/.* -Rf
+
+# Bring the server up, building the necessary images
+docker compose up --build --detach --remove-orphans
+
+# Show some information
+source .env
+
+echo ""
+echo "Server identity"
+echo "-------------------------------------------------------------------------------"
+echo "Apache        : $APACHE_VERSION"
+echo "PHP           : $PHP_VERSION"
+echo "DB Server     : $DB_SERVER_TYPE $MYSQL_VERSION"
+echo ""
+echo "Site access (use in your browser)"
+echo "-------------------------------------------------------------------------------"
+echo "HTTP URL      : http://localhost:$EXTERNAL_HTTP_PORT/"
+echo "HTTPS URL     : https://localhost:$EXTERNAL_HTTPS_PORT/"
+echo ""
+echo "Database (use in your site's configuration)"
+echo "-------------------------------------------------------------------------------"
+echo "Hostname      : mysql"
+echo "Port          : 3306 (default)"
+echo "Username      : $DB_USERNAME"
+echo "Password      : $DB_PASSWORD"
+echo "Database Name : $DB_NAME"
+echo ""
+echo "Database (access from your computer)"
+echo "-------------------------------------------------------------------------------"
+echo "Hostname      : localhost"
+echo "Port          : $EXTERNAL_MYSQL_PORT"
+echo "Username      : root"
+echo "Password      : $DB_ROOT_PASSWORD"
+echo "Database Name : $DB_NAME"
+echo ""
+echo "MailHog (email catcher)"
+echo "-------------------------------------------------------------------------------"
+echo "HTTP URL      : http://localhost:$EXTERNAL_MAILHOG_PORT/"
+echo "SMTP Hostname : mailhog"
+echo "SMTP Port     : 1025"
+echo "SMTP Auth     : None"
+echo "SMTP SSL/TLS  : No"

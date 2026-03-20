@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Make sure the .env file exists
+if [ ! -f .env ]
+then
+  echo Please copy .env.sample to .env before running this script.
+  exit 1
+fi
+
+# Bring the server down and clean up the containers
+docker compose down --remove-orphans
+
+# Remove the MySQL data directory
+sudo rm -rf mysql/data

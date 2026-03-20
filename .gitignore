@@ -1,10 +1,13 @@
-# Your MySQL data
+### Your MySQL data
 /mysql/data/**
 !/mysql/.gitkeep
 
-# Your website data
+### Your website data
 /public_html/**
 !/public_html/.gitkeep
 
-# Your .env file
+### Your .env file
 .env
+
+### PhpStorm stuff
+.idea/queries
