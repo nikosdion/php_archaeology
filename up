@@ -2,7 +2,7 @@
 # Make sure the .env file exists
 if [ ! -f .env ]
 then
-  echo Please copy .env.sample to .env before running this script.
+  echo Please copy env.sample to .env before running this script.
   exit 1
 fi
 
@@ -53,3 +53,21 @@ echo "SMTP Hostname : mailhog"
 echo "SMTP Port     : 1025"
 echo "SMTP Auth     : None"
 echo "SMTP SSL/TLS  : No"
+echo ""
+echo "FTP"
+echo "-------------------------------------------------------------------------------"
+echo "Hostname      : localhost"
+echo "Port          : $EXTERNAL_FTP_PORT"
+echo "Username      : $FTP_USERNAME"
+echo "Password      : $FTP_PASSWORD"
+echo "Passive Host  : $FTP_PASV_ADDRESS"
+echo "Passive Ports : $FTP_PASSIVE_PORT_START-$FTP_PASSIVE_PORT_END"
+echo "Remote Path   : /"
+echo ""
+echo "SFTP"
+echo "-------------------------------------------------------------------------------"
+echo "Hostname      : localhost"
+echo "Port          : $EXTERNAL_SFTP_PORT"
+echo "Username      : $SFTP_USERNAME"
+echo "Password      : $SFTP_PASSWORD"
+echo "Remote Path   : /upload"

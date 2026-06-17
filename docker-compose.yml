@@ -54,6 +54,40 @@ services:
       MYSQL_USER: "${DB_USERNAME}"
       MYSQL_PASSWORD: "${DB_PASSWORD}"
     container_name: ${DOCKER_IMAGE_PREFIX}mysql
+  ftp:
+    build:
+      context: './ftp/'
+    networks:
+      - visible
+      - internal
+    ports:
+      - "${EXTERNAL_FTP_PORT}:21"
+      - "${FTP_PASSIVE_PORT_START}-${FTP_PASSIVE_PORT_END}:${FTP_PASSIVE_PORT_START}-${FTP_PASSIVE_PORT_END}"
+    volumes:
+      - ${SITE_ROOT}:/home/ftpusers/${FTP_USERNAME}
+    environment:
+      PUBLICHOST: "${FTP_PASV_ADDRESS}"
+      FTP_USER_NAME: "${FTP_USERNAME}"
+      FTP_USER_PASS: "${FTP_PASSWORD}"
+      FTP_USER_HOME: "/home/ftpusers/${FTP_USERNAME}"
+      FTP_USER_UID: "${FTP_USER_UID:-1000}"
+      FTP_USER_GID: "${FTP_USER_GID:-1000}"
+      FTP_PASSIVE_PORTS: "${FTP_PASSIVE_PORT_START}:${FTP_PASSIVE_PORT_END}"
+      FTP_MAX_CLIENTS: "${FTP_MAX_CLIENTS:-10}"
+      FTP_MAX_CONNECTIONS: "${FTP_MAX_CONNECTIONS:-10}"
+    container_name: ${DOCKER_IMAGE_PREFIX}ftp
+    restart: always
+  sftp:
+    image: atmoz/sftp:latest
+    networks:
+      - visible
+    ports:
+      - "${EXTERNAL_SFTP_PORT}:22"
+    volumes:
+      - ${SITE_ROOT}:/home/${SFTP_USERNAME}/upload
+    command: "${SFTP_USERNAME}:${SFTP_PASSWORD}:1000:1000:upload"
+    container_name: ${DOCKER_IMAGE_PREFIX}sftp
+    restart: always
 networks:
   visible:
     name: ${DOCKER_IMAGE_PREFIX}visible

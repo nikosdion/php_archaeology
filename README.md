@@ -52,6 +52,8 @@ If you are using the default settings:
 * PHP 5.6, Apache 2.4, MySQL 5.5
 * Access your site at `http://localhost:4280` or `https://localhost:4443` (self-signed SSL certificate).
 * Access the Mailhog (email cather) interface at `http://localhost:4225`
+* Access the FTP server at `localhost:4221`
+* Access the SFTP server at `localhost:4222`
 * The site's files are under the `public_html` folder of this repository. 
 * The MySQL database files are under the `mysql/data` folder of this repository.
 * Regular MySQL connection information, use with your site:
@@ -63,6 +65,26 @@ If you are using the default settings:
     * **Hostname** `localhost:4236`
     * **Username** `root`
     * **Password** `MBC7ktXWaq8KNVVP3K36SALa`
+* FTP connection information:
+  * **Hostname** `localhost:4221`
+  * **Username** `ftpuser`
+  * **Password** `Rkm8M6Ta6WnGphKx7CwQdL2Y`
+  * **Passive mode** enabled
+* SFTP connection information:
+  * **Hostname** `localhost:4222`
+  * **Username** `sftpuser`
+  * **Password** `Qd3Ff6PzJr4Kx8Vm2Nc5Hs7B`
+  * **Remote path** `/upload`
+
+## FTP and SFTP notes
+
+Both file transfer services point at the same `public_html` directory as Apache and PHP.
+
+The FTP service uses an in-repository `pure-ftpd` image built on Alpine Linux. It exposes a passive mode port range. If you change `EXTERNAL_FTP_PORT`, `FTP_PASSIVE_PORT_START`, or `FTP_PASSIVE_PORT_END` in `.env`, make sure your FTP client uses the same values.
+
+`FTP_PASV_ADDRESS` must be routable from the FTP client. For host-side clients, `127.0.0.1` is the correct local default. If your FTP client runs inside another container, set `FTP_PASV_ADDRESS` to a hostname or IP address that container can actually reach.
+
+`FTP_USER_UID`, `FTP_USER_GID`, `FTP_MAX_CLIENTS`, and `FTP_MAX_CONNECTIONS` are passed through to the FTP container if you need to adjust ownership or connection limits.
 
 ## Credits
 
