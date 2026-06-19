@@ -78,7 +78,7 @@ services:
     container_name: ${DOCKER_IMAGE_PREFIX}ftp
     restart: always
   sftp:
-    image: atmoz/sftp:latest
+    image: jmcombs/sftp:latest
     networks:
       - visible
     ports:
