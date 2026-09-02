@@ -1,3 +1,6 @@
+# Copyright (c) 2023-2026 Nicholas K. Dionysopoulos
+# SPDX-License-Identifier: MIT
+
 FROM alpine:3.20
 
 RUN apk add --no-cache pure-ftpd

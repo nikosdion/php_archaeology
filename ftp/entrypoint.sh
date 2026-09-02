@@ -1,4 +1,7 @@
 #!/bin/sh
+# Copyright (c) 2023-2026 Nicholas K. Dionysopoulos
+# SPDX-License-Identifier: MIT
+
 set -eu
 
 require_env() {

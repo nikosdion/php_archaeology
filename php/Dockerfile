@@ -1,3 +1,6 @@
+# Copyright (c) 2023-2026 Nicholas K. Dionysopoulos
+# SPDX-License-Identifier: MIT
+
 ARG PHP_VERSION=""
 FROM php:${PHP_VERSION:+${PHP_VERSION}-}fpm-alpine
 

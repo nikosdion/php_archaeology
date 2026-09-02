@@ -1,3 +1,6 @@
+# Copyright (c) 2023-2026 Nicholas K. Dionysopoulos
+# SPDX-License-Identifier: MIT
+
 ARG APACHE_VERSION=""
 FROM httpd:${APACHE_VERSION:+${APACHE_VERSION}-}alpine
 

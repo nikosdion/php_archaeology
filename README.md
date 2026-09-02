@@ -2,6 +2,9 @@
 
 A Docker-based server stack for running **old** sites locally.
 
+> [!NOTE]
+> The Apache, PHP and MySQL versions are configurable. Nothing stops you from running _brand new_ sites on the stack, as long as you select sufficiently recent versions of the server software.
+
 ## The reason of its existence
 
 If you have a backup of an ancient site, you will have a hard time restoring it on a commercial host, or a regular local server environment. Your server environment has a PHP and database server version that's too new for, and incompatible with, the old site.
@@ -89,3 +92,7 @@ The FTP service uses an in-repository `pure-ftpd` image built on Alpine Linux. I
 ## Credits
 
 Originally based on the blog post “[Running your LAMP Stack on Docker Containers](https://blog.tkav.dev/running-your-lamp-stack-on-docker-containers)”
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE.txt](LICENSE.txt) for details.

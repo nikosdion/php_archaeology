@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Copyright (c) 2023-2026 Nicholas K. Dionysopoulos
+# SPDX-License-Identifier: MIT
+
 # Make sure the .env file exists
 if [ ! -f .env ]
 then
